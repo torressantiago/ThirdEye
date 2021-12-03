@@ -15,16 +15,19 @@ GPIO.setup(23, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 while 1:
     if (GPIO.input(23) == False && counter == 1):
         if(counter == 1):
+		# TODO Close previously created process
 		os.system("<Launch Program 1>")
 		counter = 2
 		time.sleep(1) # wait for a second
 		break
 	elif(counter == 2):
+		# TODO Close previously created process
 		os.system("<Launch Program 2>")
 		counter = 3
 		time.sleep(1) # wait for a second
 		break
 	elif(counter == 3):
+		# TODO Close previously created process
 		os.system("<Launch Program 3>")
 		counter = 1
 		time.sleep(1) # wait for a second
