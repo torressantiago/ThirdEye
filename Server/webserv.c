@@ -53,21 +53,24 @@ int main(int argc, char const *argv[]){
             healthcheck = 1; // There's a problem with user
             close(server_fd);
         }
-        else if(*buffer == 'Y'){ // YES
+        if(*buffer == 'Y'){ // YES
             healthcheck = 0; // User is OK
             close(server_fd);
         }
 
-        else if(*buffer == 'R'){
-            if(healthcheck = 0){ // User is ok
+        if(*buffer == 'R'){
+            if(healthcheck == 0){ // User is ok
                 send(new_socket , ok , strlen(ok) , 0);
                 close(server_fd);
             }
-            else if(healthcheck = 1){ // User is not ok
+            if(healthcheck == 1){ // User is not ok
                 send(new_socket , nok , strlen(nok) , 0);
                 close(server_fd);
             }
         }
+	else{
+	    close(server_fd);
+	}
     }
     return 0;
 }
