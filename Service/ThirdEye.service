@@ -5,7 +5,6 @@ After=multi-user.target
 [Service]
 Type=simple
 ExecStart=/bin/bash /home/pi/test.sh
-# ExecStart=<python env location> <python script location>
 User=pi
 WorkingDirectory=/home/pi
 Restart=on-failure

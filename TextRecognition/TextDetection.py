@@ -1,3 +1,4 @@
+#!/bin/python3
 # Import required packages
 import cv2
 import pytesseract
@@ -6,7 +7,7 @@ import pytesseract
 pytesseract.pytesseract.tesseract_cmd = '/home/pi/ThirdEye/TextRecognition/tesseract/tesseract'
 
 # Read image from which text needs to be extracted
-img = cv2.imread("Photo4.jpg")
+img = cv2.imread("image.jpg")
 
 # Preprocessing the image starts
 

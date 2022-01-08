@@ -39,25 +39,29 @@ while 1:
 	if (GPIO.input(PORT_NUM) == True):
 		counter = counter + 1
 		if(counter == 1):
-			process_stop("test2.sh")
-			subprocess.Popen(["/home/pi/ThirdEye/Scheduler/test1.sh","&"])
-			subprocess.Popen(["espeak","test1 running"])
+			process_stop("ObjectDetection.sh")
+			subprocess.Popen(["pkill","-f","ObjectDetection.py"])
+			subprocess.Popen(["/home/pi/ThirdEye/TextRecognition/TextRecognition.sh","&"])
+			subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Recognition de texte en cours d'exécution"])
 			time.sleep(1) # wait for a second
 		elif(counter == 2):
-			process_stop("test1.sh")
-			subprocess.Popen(["/home/pi/ThirdEye/Scheduler/test2.sh","&"])
-			subprocess.Popen(["espeak","test2 running"])
+			process_stop("TextRecognition.sh")
+			subprocess.Popen(["pkill","-f","TextDetection.py"])
+			subprocess.Popen(["/home/pi/ThirdEye/ObjectDetection/ObjectDection.sh","&"])
+			subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Recognition des alentours en cours d'exécution"])
 			counter = 0
 			time.sleep(1) # wait for a second
 	elif(GPIO.input(EMRGCY_PORT_NUM) == True):
 		helpcounter = helpcounter + 1
 		if(helpcounter == 1):
-			subprocess.Popen(["espeak","test3 running"])
-			subprocess.Popen(["/home/pi/ThirdEye/Scheduler/test3.sh","&"])
+			process_stop("noemergency.sh")
+			subprocess.Popen(["/home/pi/ThirdEye/EmergencyCall/thereisemergency.sh","&"])
+			subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Aide demandée"])
 			time.sleep(1) # wait for a second
 		elif(helpcounter == 2):
-			subprocess.Popen(["espeak","test3 stopped"])
-			process_stop("test3.sh")
+			process_stop("thereisemergency.sh")
+			subprocess.Popen(["/home/pi/ThirdEye/EmergencyCall/noemergency.sh","&"])
+			subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Arrêt de demande d'aide"])
 			time.sleep(1) # wait for a second
 			helpcounter = 0
 

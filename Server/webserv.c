@@ -68,9 +68,9 @@ int main(int argc, char const *argv[]){
                 close(server_fd);
             }
         }
-	else{
-	    close(server_fd);
-	}
+        else{
+            close(server_fd);
+        }
     }
     return 0;
 }
