@@ -4,4 +4,4 @@
 # $3: SERVICE PORT
 echo -n 'Y' | nc -w 1 $1 $2
 
-# example : bash webput.sh '1' 127.0.0.0 8080
+# example : bash noemergency.sh 127.0.0.0 8080
