@@ -4,7 +4,7 @@ After=multi-user.target
 
 [Service]
 Type=simple
-ExecStart=/bin/bash /home/pi/test.sh
+ExecStart=/bin/bash /home/pi/ThirdEye/Service/SchedulerExec.sh
 User=pi
 WorkingDirectory=/home/pi
 Restart=on-failure
