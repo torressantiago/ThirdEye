@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ThirdEye</string>
+    <string name="welcome">Monitoring ThirdEye</string>
+
+    <string name="explanation">
+        Laissez cette application en arrière plan,
+        vous serez notifié quand une alerte aura été passée
+        par le détenteur des lunettes associées.
+    </string>
+
+
+</resources>
