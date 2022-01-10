@@ -56,7 +56,7 @@ public class ForegroundService extends Service {
         Notification notif = new NotificationCompat.Builder(this, "MyChannelId")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("ThirdEye")
-                .setContentText("Cliquez pour ouvrir l'application")
+                .setContentText("Le monitoring est en cours")
                 .setContentIntent(contentIntent)
                 .setOngoing(true)
                 .build();

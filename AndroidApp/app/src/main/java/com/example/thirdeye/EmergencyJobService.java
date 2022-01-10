@@ -81,7 +81,7 @@ public class EmergencyJobService extends JobService {
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         int result = scheduler.schedule(jobInfo);
         if (result == JobScheduler.RESULT_SUCCESS) {
-            Toast.makeText(this, "schedule job avec succès", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Schedule job avec succès");
         }
         Log.d(TAG, "scheduleJobEmergency: fin");
     }
