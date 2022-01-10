@@ -7,7 +7,7 @@ import pytesseract
 pytesseract.pytesseract.tesseract_cmd = '/home/pi/ThirdEye/TextRecognition/tesseract/tesseract'
 
 # Read image from which text needs to be extracted
-img = cv2.imread("image.jpg")
+img = cv2.imread("/home/pi/ThirdEye/TextRecognition/testflou.jpg")
 
 # Preprocessing the image starts
 
@@ -56,7 +56,7 @@ for cnt in contours:
 	file = open("recognized.txt", "a")
 	
 	# Apply OCR on the cropped image
-	text = pytesseract.image_to_string(cropped,lang='eng')
+	text = pytesseract.image_to_string(cropped,lang='fra')
 	
 	# Appending the text into file
 	file.write(text)
