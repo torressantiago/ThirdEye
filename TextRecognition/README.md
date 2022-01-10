@@ -6,3 +6,9 @@ Script that captures the image, then executes TextDetection.py and speaks the re
 
 ### samplePhotos
 Repository to test TextDetection.py
+
+### image.jpg, index.png, testflou.png
+Since the Raspberry Pi's Camera V2 is quite bad, some sample pictures taken with a smartphone had to be uploaded in order to test TextDetection.py. In a further iteration of this project, we expect to use a better camera.
+
+### recognized.txt
+Recognized text produced bt TextDetection.py
