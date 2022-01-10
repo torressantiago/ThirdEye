@@ -25,8 +25,11 @@ public class EmergencyJobService extends JobService {
     // Tag pour les messages dans les logs
     private static final String TAG = "EmergencyJobService";
     // Adresse du serveur et port de connexion
-    final String server_address = "13.40.96.149";
-    final int server_port = 8080;
+    private static final String HOST_ADDRESS = "13.40.96.149";
+    private static final int HOST_PORT = 8080;
+
+    // Période d'appel au serveur, en millisecondes.
+    private static final int PERIODE_APPEL = 5000;
 
     // Instanciation de la tâche
     EmergencyTask tacheEmergency = new EmergencyTask();
@@ -76,7 +79,7 @@ public class EmergencyJobService extends JobService {
         // On utilise alors la propriété SetMinimumLatency pour forcer une durée inter-job
         //      minimale, et donc éviter leur prolifération.
         //      Cela correspond donc à la période effective.
-        JobInfo jobInfo = new JobInfo.Builder(0, serviceName).setMinimumLatency(5000).build();
+        JobInfo jobInfo = new JobInfo.Builder(0, serviceName).setMinimumLatency(PERIODE_APPEL).build();
 
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         int result = scheduler.schedule(jobInfo);
@@ -86,6 +89,9 @@ public class EmergencyJobService extends JobService {
         Log.d(TAG, "scheduleJobEmergency: fin");
     }
 
+    /**
+     * Envoi de la notification d'alerte.
+     */
     private void addNotification(){
         NotificationChannel chan = new NotificationChannel(
                 "ChannelEmergency",
@@ -118,10 +124,11 @@ public class EmergencyJobService extends JobService {
         // Tag pour les messages dans les logs
         private static final String TAG = "EmergencyTask";
 
-        @Override
         /**
          * Appelle le serveur pour obtenir l'état
+         * @return Le code réponse renvoyé par l'appel au serveur
          */
+        @Override
         protected Character doInBackground(Void... voids) {
 
             Log.d(TAG, "doInBackground: debut");
@@ -129,31 +136,27 @@ public class EmergencyJobService extends JobService {
 
             try {
                 // Création du socket TCP pour communiquer avec le serveur
-                Socket socket = new Socket(server_address, server_port);
+                Socket socket = new Socket(HOST_ADDRESS, HOST_PORT);
                 // Envoi de la requête au serveur
                 socket.getOutputStream().write(((byte) 'R'));
                 socket.getOutputStream().flush();
                 // Récupération de la réponse
-
-                // Affichage de la réponse
                 int response = socket.getInputStream().read();
                 responseChar = (char) response;
+                // Affichage de la réponse dans les logs
                 if (response == -1) {
                     Log.d(TAG, "Il n'y a rien à lire");
                 } else {
                     String str = "Réponse obtenue = " + responseChar;
-                    Log.i(TAG, str);
+                    Log.d(TAG, str);
                 }
-
-                System.out.println("Bye");
                 // Fermeture du socket
                 socket.close();
 
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e(TAG, "Une exception a été levée !");
-
-                // Valeur de réponse correspondant à l'erreur
+                // Valeur de réponse correspondant à l'erreur pour le post-traitement
                 responseChar = 'Z';
             }
 
@@ -161,6 +164,10 @@ public class EmergencyJobService extends JobService {
             return responseChar;
         }
 
+        /**
+         *
+         * @param result Le code réponse renvoyé par l'appel au serveur
+         */
         @Override
         protected void onPostExecute(Character result) {
             super.onPostExecute(result);
@@ -180,7 +187,7 @@ public class EmergencyJobService extends JobService {
                     Log.d(TAG, "Erreur, la réponse n'est pas reconnue. Réponse = " + result);
                     break;
             }
-
+            // Programation de l'appel suivant au serveur
             scheduleJobEmergency();
         }
     }
