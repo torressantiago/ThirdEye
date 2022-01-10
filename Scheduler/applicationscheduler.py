@@ -39,28 +39,31 @@ while 1:
 	if (GPIO.input(PORT_NUM) == True):
 		counter = counter + 1
 		if(counter == 1):
-			process_stop("ObjectDetection.sh")
-			subprocess.Popen(["pkill","-f","ObjectDetection.py"])
-			subprocess.Popen(["/home/pi/ThirdEye/TextRecognition/TextRecognition.sh","&"])
-			subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Recognition de texte en cours d'exécution"])
-			time.sleep(1) # wait for a second
+			try:
+				subprocess.Popen(["pkill","-f","ObjectDetection.py"])
+				subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Recognition de texte en cours d'exécution"])
+				subprocess.Popen(["bash","/home/pi/ThirdEye/TextRecognition/TextRecognition.sh","&"])
+				time.sleep(1) # wait for a second
+			except:
+				print("error ocurred")
 		elif(counter == 2):
-			process_stop("TextRecognition.sh")
-			subprocess.Popen(["pkill","-f","TextDetection.py"])
-			subprocess.Popen(["/home/pi/ThirdEye/ObjectDetection/ObjectDection.sh","&"])
-			subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Recognition des alentours en cours d'exécution"])
-			counter = 0
-			time.sleep(1) # wait for a second
-	elif(GPIO.input(EMRGCY_PORT_NUM) == True):
+			try:
+				process_stop("TextRecognition.sh")
+				subprocess.Popen(["pkill","-f","TextDetection.py"])
+				subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Recognition des alentours en cours d'exécution"])
+				subprocess.Popen(["python3","/home/pi/ThirdEye/ObjectDetection/ObjectDetection.py","&"])
+				counter = 0
+				time.sleep(1) # wait for a second
+			except:
+				print("error ocurred")
+	if(GPIO.input(EMRGCY_PORT_NUM) == True):
 		helpcounter = helpcounter + 1
 		if(helpcounter == 1):
-			process_stop("noemergency.sh")
-			subprocess.Popen(["/home/pi/ThirdEye/EmergencyCall/thereisemergency.sh","&"])
+			subprocess.Popen(["bash","/home/pi/ThirdEye/EmergencyCall/thereisemergency.sh","13.40.96.149","8080"])
 			subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Aide demandée"])
 			time.sleep(1) # wait for a second
 		elif(helpcounter == 2):
-			process_stop("thereisemergency.sh")
-			subprocess.Popen(["/home/pi/ThirdEye/EmergencyCall/noemergency.sh","&"])
+			subprocess.Popen(["bash","/home/pi/ThirdEye/EmergencyCall/noemergency.sh","13.40.96.149","8080"])
 			subprocess.Popen(["espeak-ng","-v","mb/mb-fr2","Arrêt de demande d'aide"])
 			time.sleep(1) # wait for a second
 			helpcounter = 0
