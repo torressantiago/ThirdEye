@@ -47,7 +47,7 @@ public class ForegroundService extends Service {
         NotificationChannel chan = new NotificationChannel(
                 "MyChannelId",
                 "My Foreground Service",
-                NotificationManager.IMPORTANCE_MAX);
+                NotificationManager.IMPORTANCE_LOW);
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert manager != null;
@@ -61,7 +61,7 @@ public class ForegroundService extends Service {
                 .setOngoing(true)
                 .build();
 
-        //On place le service en premier plan
+        // On place le service en premier plan
         startForeground(1337, notif);
 
         // Appel au scheduler pour lancer les jobs.

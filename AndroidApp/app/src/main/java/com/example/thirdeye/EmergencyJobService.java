@@ -167,6 +167,7 @@ public class EmergencyJobService extends JobService {
             switch (result) {
                 case 'Z':
                     Log.i(TAG, "Une exception a eu lieu, on n'a donc pas de résultat.");
+                    Toast.makeText(EmergencyJobService.this, "Le serveur n'a pas pu être joint !", Toast.LENGTH_LONG).show();
                     break;
                 case 'O':
                     Log.i(TAG, "Tout va bien !");
